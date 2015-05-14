@@ -689,6 +689,19 @@ exit:
 unsigned char  in[TEST_BUF_SIZE];
 unsigned char out[4 * TEST_BUF_SIZE];
 
+static void usage(char *argv[])
+{
+    printf("usage: %s <input_file> <output_file> <d/e> <key_in_hex>\n\n", argv[0]);
+    printf("AES (Rijndael) encryption/decryption\n");
+    printf("Copyright (c) 1998-2013, Brian Gladman, Worcester, UK. All rights reserved.\n"\
+            "The redistribution and use of this software (with or without changes)\n"\
+            "is allowed without the payment of fees or royalties provided that:\n\n"\
+            "  source code distributions include the above copyright notice, this\n"\
+            "  list of conditions and the following disclaimer;\n\n"\
+            "  binary distributions include the above copyright notice, this list\n"\
+            "  of conditions and the following disclaimer in their documentation.\n\n");
+}
+
 int main(int argc, char *argv[])
 {   FILE           *fin = 0, *fout = 0;
     unsigned char  *cp;
@@ -710,7 +723,7 @@ int main(int argc, char *argv[])
         (toupper(*argv[3]) != 'D' &&
         toupper(*argv[3]) != 'E'))
     {
-        printf("usage: %s <input_file> <output_file> <d/e> <key_in_hex>\n", argv[0]);
+        usage(argv);
         err = -1; goto exit;
     }
 
