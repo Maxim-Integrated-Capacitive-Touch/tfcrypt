@@ -214,6 +214,9 @@ VERSION HISTORY:
 
 #include <stdio.h>
 #include <stdlib.h>
+#ifdef STANDALONE_MODE
+#include <string.h>
+#endif
 
 /*
 ** Translation Table as described in RFC1113
@@ -238,6 +241,7 @@ static const char cd64[]="|$$$}rstuvwxyz{$$$$$$$>?@ABCDEFGHIJKLMNOPQRSTUVW$$$$$$
 #define B64_LINE_SIZE_TO_MIN    5
 #define B64_SYNTAX_TOOMANYARGS  6
 
+#ifdef STANDALONE_MODE
 /*
 ** b64_message
 **
@@ -256,6 +260,7 @@ static char *b64_msgs[ B64_MAX_MESSAGES ] = {
 };
 
 #define b64_message( ec ) ((ec > 0 && ec < B64_MAX_MESSAGES ) ? b64_msgs[ ec ] : b64_msgs[ 0 ])
+#endif
 
 /*
 ** encodeblock
@@ -275,6 +280,7 @@ static void encodeblock( unsigned char *in, unsigned char *out, int len )
 **
 ** base64 encode a stream adding padding and line breaks as per spec.
 */
+#ifdef STANDALONE_MODE
 static int encode( FILE *infile, FILE *outfile, int linesize )
 {
     unsigned char in[3];
@@ -318,6 +324,69 @@ static int encode( FILE *infile, FILE *outfile, int linesize )
     }
     return( retcode );
 }
+#endif
+
+int encode_buffer(unsigned char *inBuf, unsigned int inBufSize,
+                  unsigned char *outBuf, unsigned int outBufSize,
+                  unsigned int *outBufUsed)
+{
+    unsigned char in[4];
+    unsigned char out[5];
+    unsigned int i, j, k, len;
+    int retcode = 0;
+
+    //printf("encode_buffer:  length=%d, buffer=|%s|\n", inBufSize, inBuf);
+
+    *in = (unsigned char) 0;
+    *out = (unsigned char) 0;
+
+    if ( inBufSize > ((outBufSize-1)*3/4) ) {
+        return B64_FILE_IO_ERROR;
+    }
+
+    memset(outBuf, 0, outBufSize * sizeof(char));
+    memset(    in, 0,          4 * sizeof(char));
+    memset(   out, 0,          5 * sizeof(char));
+
+
+    k=0;
+
+    for ( j=0; j<inBufSize; j=j+3 ) {
+        len = 0;
+        for( i = 0; i < 3; i++ ) {
+            if ( j+i > (inBufSize-1) ){
+                in[i] = (unsigned char) 0;
+                len++;
+                continue;
+            }
+            in[i] = inBuf[j+i];
+            len++;
+        }
+
+        if ( len > 0 ) {
+            encodeblock( in, out, len );
+            //strcpy(&outBuf[k], (char *)out);
+            //k = strlen(outBuf);
+            i = 0;
+            outBuf[k++] = out[i++];
+            outBuf[k++] = out[i++];
+            switch (len) {
+            default:
+                return -1;
+            case 1:
+                break;
+            case 3:
+                outBuf[k++] = out[i++];
+            case 2:
+                outBuf[k++] = out[i++];
+                break;
+            }
+            *outBufUsed = k;
+        }
+    }
+
+    return( retcode );
+}
 
 /*
 ** decodeblock
@@ -336,6 +405,7 @@ static void decodeblock( unsigned char *in, unsigned char *out )
 **
 ** decode a base64 encoded stream discarding padding, line breaks and noise
 */
+#ifdef STANDALONE_MODE
 static int decode( FILE *infile, FILE *outfile )
 {
 	int retcode = 0;
@@ -383,7 +453,75 @@ static int decode( FILE *infile, FILE *outfile )
     }
     return( retcode );
 }
+#endif
 
+int decode_buffer(unsigned char *inBuf, unsigned int inBufSize,
+                  unsigned char *outBuf, unsigned int outBufSize,
+                  unsigned int *outBufUsed)
+{
+    int retcode = 0;
+    unsigned char in[5];
+    unsigned char out[4];
+    int v;
+    unsigned int i, j, k, len;
+
+    // printf("decode_buffer:  length=%d, buffer=|%s|\n", inBufSize, inBuf);
+
+    *in = (unsigned char) 0;
+    *out = (unsigned char) 0;
+
+    if ( outBufSize < inBufSize*3/4 ) {
+        return B64_FILE_IO_ERROR;
+    }
+
+    memset(outBuf, 0, outBufSize * sizeof(char));
+    memset ( in, 0, 5*sizeof(unsigned char));
+    memset (out, 0, 4*sizeof(unsigned char));
+
+    k=0;
+
+    for ( j = 0; j<inBufSize; j=j+4) {
+        for( len = 0, i = 0; i < 4 ; i++ ) {
+            v = 0;
+            if ( j+i < inBufSize )  {
+                v = inBuf[j+i];
+
+                v = ((v < 43 || v > 122) ? 0 : (int) cd64[ v - 43 ]);
+                if( v != 0 ) {
+                    v = ((v == (int)'$') ? 0 : v - 61);
+                }
+                len++;
+                in[ i ] = v != 0 ? (unsigned char) (v - 1) : 0;
+            }
+        }
+
+        if( len > 0 ) {
+            decodeblock( in, out );
+            // printf("decode_buffer: j=%3d k=%d, len=%d in=|%s|, out=|%s|\n", j, k, len, in, out);
+            //strcpy( &outBuf[k], (char *)out);
+            //k = strlen(outBuf);
+            i = 0;
+            switch (len) {
+            default:
+            case 1:
+                return -1;
+            case 4:
+                outBuf[k++] = out[i++];
+            case 3:
+                outBuf[k++] = out[i++];
+            case 2:
+                outBuf[k++] = out[i++];
+                break;
+            }
+            *outBufUsed = k;
+        }
+
+    }
+
+    return( retcode );
+}
+
+#ifdef STANDALONE_MODE
 /*
 ** b64
 **
@@ -553,3 +691,4 @@ int main( int argc, char **argv )
 
     return( retcode );
 }
+#endif
