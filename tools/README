@@ -1,0 +1,8 @@
+README
+
+Host tools folder:
+aesxam: aes encrypt/decrypt tool
+b64: base64 encode/decode tool
+
+How to build tools:
+run "make tools" from top directory"
