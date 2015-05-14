@@ -171,6 +171,7 @@ void fillrand(unsigned char *buf, const int len)
     }
 }
 
+#ifdef USE_FILE_FUNC
 int encfile(FILE *fin, FILE *fout, aes_encrypt_ctx ctx[1])
 {   unsigned char dbuf[3 * BLOCK_LEN];
     unsigned long i, len, wlen = BLOCK_LEN;
@@ -344,6 +345,7 @@ int decfile(FILE *fin, FILE *fout, aes_decrypt_ctx ctx[1])
         }
     }
 }
+#endif
 
 int encbuffer(unsigned char *in, unsigned int insize,
               unsigned char *out, unsigned int outsize,
