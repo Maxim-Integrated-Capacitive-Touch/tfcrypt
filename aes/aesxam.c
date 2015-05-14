@@ -153,7 +153,7 @@ void cycles(unsigned long long  *rtn)
 
 void fillrand(unsigned char *buf, const int len)
 {   static unsigned long a[2], mt = 1, count = 4;
-    static unsigned char r[4];
+    static unsigned long r;
     int                  i;
 
     //if(mt) { mt = 0; *(unsigned long long*)a = read_tsc(); }
@@ -163,11 +163,11 @@ void fillrand(unsigned char *buf, const int len)
     {
         if(count == 4)
         {
-            *(unsigned long*)r = RAND(a[0], a[1]);
+            r = RAND(a[0], a[1]);
             count = 0;
         }
 
-        buf[i] = r[count++];
+        buf[i] = ((unsigned char *)&r)[count++];
     }
 }
 
