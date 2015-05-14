@@ -169,10 +169,12 @@ Issue Date: 20/12/2007
 #  define VIA_ACE_POSSIBLE
 #endif
 
+#if 0
 #if (defined( _WIN64 ) && defined( _MSC_VER )) \
  || (defined( __GNUC__ ) && defined( __x86_64__ )) \
  && !(defined( INTEL_AES_POSSIBLE ))
 #  define INTEL_AES_POSSIBLE
+#endif
 #endif
 
 /*  Define this option if support for the Intel AESNI is required
@@ -187,9 +189,10 @@ Issue Date: 20/12/2007
 	AES_REV_DKS must NOT be defined when the assembler files are
 	built
 */
-
+#if 0
 #if 1 && defined( INTEL_AES_POSSIBLE ) && !defined( USE_INTEL_AES_IF_PRESENT )
 #  define USE_INTEL_AES_IF_PRESENT
+#endif
 #endif
 
 /*  Define this option if support for the VIA ACE is required. This uses
