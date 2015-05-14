@@ -1,10 +1,12 @@
 Q=@
 
 ifeq (,$(ANDROID_NDK))
-$(error ANDROID_NDK undefined in environment!)
+ANDROID_NDK=$(HOME)/android-ndk-r8e
+$(warning ANDROID_NDK undefined in environment!using default $(ANDROID_NDK) !!!!)
 endif
 ifeq (,$(ANDROID_API_LEVEL))
-$(error ANDROID_API_LEVEL undefined in environment!)
+ANDROID_API_LEVEL=14
+$(warning ANDROID_API_LEVEL undefined in environment! using default level $(ANDROID_API_LEVEL) !!!!)
 endif
 
 ARCH=arm
