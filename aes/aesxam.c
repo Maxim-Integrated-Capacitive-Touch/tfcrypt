@@ -545,6 +545,10 @@ int encrypt_buffer (unsigned char *key, short key_len,
 {
     aes_encrypt_ctx ctx[1];
 
+#if !defined(USE_FILE_FUNC) && !defined(STANDALONE_CFG_ENCRYPTER)
+	aes_init();     // in case dynamic AES tables are being used
+#endif
+
     memset(ctx, 0, sizeof(ctx));
     aes_encrypt_key(key, key_len, ctx);
 
@@ -557,6 +561,10 @@ int decrypt_buffer (unsigned char *key, short key_len,
                     unsigned int *rsize)
 {
     aes_decrypt_ctx     ctx[1];
+
+#if !defined(USE_FILE_FUNC) && !defined(STANDALONE_CFG_ENCRYPTER)
+	aes_init();     // in case dynamic AES tables are being used
+#endif
 
     memset(ctx, 0, sizeof(ctx));
     aes_decrypt_key(key, key_len, ctx);
