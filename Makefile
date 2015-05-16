@@ -11,12 +11,12 @@ endif
 
 ARCH=arm
 CROSS_COMPILE:=$(ANDROID_NDK)/toolchains/arm-linux-androideabi-4.4.3/prebuilt/linux-x86_64/bin/arm-linux-androideabi-
-CFLAGS:=--sysroot=$(ANDROID_NDK)/platforms/android-$(ANDROID_API_LEVEL)/arch-arm -fPIC -O2 -Wall
+CFLAGS:=--sysroot=$(ANDROID_NDK)/platforms/android-$(ANDROID_API_LEVEL)/arch-arm -fPIC -O2 -Wall -I.
 
 CC:=$(CROSS_COMPILE)gcc
 STRIP:=$(CROSS_COMPILE)strip
 
-tools: CFLAGS= -DSTANDALONE_CFG_ENCRYPTER -DSTANDALONE_MODE
+tools: CFLAGS= -I. -DSTANDALONE_CFG_ENCRYPTER -DSTANDALONE_MODE
 
 tools: CC:=gcc
 
