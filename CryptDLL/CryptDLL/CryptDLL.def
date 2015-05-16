@@ -1,0 +1,4 @@
+LIBRARY   CryptDLL
+EXPORTS
+   Init @1
+  

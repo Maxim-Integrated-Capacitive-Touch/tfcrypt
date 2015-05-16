@@ -214,9 +214,10 @@ VERSION HISTORY:
 
 #include <stdio.h>
 #include <stdlib.h>
-#ifdef STANDALONE_MODE
 #include <string.h>
-#endif
+
+
+#include "common.h"
 
 /*
 ** Translation Table as described in RFC1113
@@ -326,7 +327,7 @@ static int encode( FILE *infile, FILE *outfile, int linesize )
 }
 #endif
 
-int encode_buffer(unsigned char *inBuf, unsigned int inBufSize,
+DLLEXPORT int encode_buffer(unsigned char *inBuf, unsigned int inBufSize,
                   unsigned char *outBuf, unsigned int outBufSize,
                   unsigned int *outBufUsed)
 {
@@ -455,7 +456,7 @@ static int decode( FILE *infile, FILE *outfile )
 }
 #endif
 
-int decode_buffer(unsigned char *inBuf, unsigned int inBufSize,
+DLLEXPORT int decode_buffer(unsigned char *inBuf, unsigned int inBufSize,
                   unsigned char *outBuf, unsigned int outBufSize,
                   unsigned int *outBufUsed)
 {

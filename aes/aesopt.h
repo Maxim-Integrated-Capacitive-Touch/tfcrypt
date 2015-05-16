@@ -162,14 +162,13 @@ Issue Date: 20/12/2007
 #endif
 
 /*  2. Intel AES AND VIA ACE SUPPORT */
-
+#if 0
 #if defined( __GNUC__ ) && defined( __i386__ ) \
  || defined( _WIN32 ) && defined( _M_IX86 ) && !(defined( _WIN64 ) \
  || defined( _WIN32_WCE ) || defined( _MSC_VER ) && ( _MSC_VER <= 800 ))
 #  define VIA_ACE_POSSIBLE
 #endif
 
-#if 0
 #if (defined( _WIN64 ) && defined( _MSC_VER )) \
  || (defined( __GNUC__ ) && defined( __x86_64__ )) \
  && !(defined( INTEL_AES_POSSIBLE ))

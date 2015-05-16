@@ -114,11 +114,14 @@ Issue Date: 20/12/2007
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
+#include <time.h>
+
 #ifdef STANDALONE_CFG_ENCRYPTER
 #include <sys/types.h>
 #include <sys/stat.h>
 #endif
 
+#include "common.h"
 #include "aes.h"
 #include "rdtsc.h"
 
@@ -130,7 +133,6 @@ Issue Date: 20/12/2007
 
 void cycles(unsigned long long  *rtn)
 {
-#include <time.h>
   time_t tt;
   tt     = time(NULL);
   rtn[0] = tt;
@@ -538,7 +540,7 @@ int decbuffer(unsigned char *in, unsigned int insize,
     return OK;
 }
 
-int encrypt_buffer (unsigned char *key, short key_len,
+DLLEXPORT int encrypt_buffer(unsigned char *key, short key_len,
                     unsigned char *in,  unsigned int insize,
                     unsigned char *out, unsigned int outsize,
                     unsigned int *rsize)
@@ -555,7 +557,7 @@ int encrypt_buffer (unsigned char *key, short key_len,
     return encbuffer(in, insize, out, outsize, rsize, ctx);
 }
 
-int decrypt_buffer (unsigned char *key, short key_len,
+DLLEXPORT int decrypt_buffer(unsigned char *key, short key_len,
                     unsigned char *in,  unsigned int insize,
                     unsigned char *out, unsigned int outsize,
                     unsigned int *rsize)
@@ -572,7 +574,7 @@ int decrypt_buffer (unsigned char *key, short key_len,
     return decbuffer(in, insize, out, outsize, rsize, ctx);
 }
 
-short kfetch (unsigned short *k, unsigned short klen, unsigned char *cp)
+DLLEXPORT short kfetch (unsigned short *k, unsigned short klen, unsigned char *cp)
 {
     int i, by = 0;
     unsigned char ch, *ck = (unsigned char *)k;

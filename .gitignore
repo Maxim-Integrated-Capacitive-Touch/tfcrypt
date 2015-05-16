@@ -2,3 +2,6 @@
 aesxam
 b64
 libtfcrypt.so
+Debug
+*.sdf
+*.suo
