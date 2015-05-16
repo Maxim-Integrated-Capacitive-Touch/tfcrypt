@@ -1,3 +1,5 @@
+.DEFAULT_GOAL=default
+
 Q=@
 
 ifeq (,$(ANDROID_NDK))
