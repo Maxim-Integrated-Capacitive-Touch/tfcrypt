@@ -1,7 +1,8 @@
 *.o
-aesxam
-b64
+tools/aesxam
+tools/b64
 libtfcrypt.so
 Debug
 *.sdf
 *.suo
+
