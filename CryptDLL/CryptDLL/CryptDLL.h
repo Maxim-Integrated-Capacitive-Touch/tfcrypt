@@ -34,3 +34,12 @@
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+
+extern "C"
+{
+	__declspec(dllexport) short __stdcall  kfetch_a(unsigned short *k, unsigned short klen, unsigned char *cp);
+	__declspec(dllexport) int __stdcall  encode_buffer_a(unsigned char *inBuf, unsigned int inBufSize, unsigned char *outBuf, unsigned int outBufSize, unsigned int *outBufUsed);
+	__declspec(dllexport) int __stdcall  encrypt_buffer_a(unsigned char *key, short key_len, unsigned char *in,  unsigned int insize, unsigned char *out, unsigned int outsize, unsigned int *rsize);
+	__declspec(dllexport) int __stdcall  decrypt_buffer_a(unsigned char *key, short key_len, unsigned char *in,  unsigned int insize, unsigned char *out, unsigned int outsize, unsigned int *rsize);
+	__declspec(dllexport) int __stdcall  decode_buffer_a(unsigned char *inBuf, unsigned int inBufSize, unsigned char *outBuf, unsigned int outBufSize, unsigned int *outBufUsed);
+}

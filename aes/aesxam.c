@@ -540,7 +540,7 @@ int decbuffer(unsigned char *in, unsigned int insize,
     return OK;
 }
 
-DLLEXPORT int encrypt_buffer(unsigned char *key, short key_len,
+int DLLEXPORT encrypt_buffer(unsigned char *key, short key_len,
                     unsigned char *in,  unsigned int insize,
                     unsigned char *out, unsigned int outsize,
                     unsigned int *rsize)
@@ -557,7 +557,7 @@ DLLEXPORT int encrypt_buffer(unsigned char *key, short key_len,
     return encbuffer(in, insize, out, outsize, rsize, ctx);
 }
 
-DLLEXPORT int decrypt_buffer(unsigned char *key, short key_len,
+int DLLEXPORT decrypt_buffer(unsigned char *key, short key_len,
                     unsigned char *in,  unsigned int insize,
                     unsigned char *out, unsigned int outsize,
                     unsigned int *rsize)
@@ -574,7 +574,7 @@ DLLEXPORT int decrypt_buffer(unsigned char *key, short key_len,
     return decbuffer(in, insize, out, outsize, rsize, ctx);
 }
 
-DLLEXPORT short kfetch (unsigned short *k, unsigned short klen, unsigned char *cp)
+short DLLEXPORT kfetch (unsigned short *k, unsigned short klen, unsigned char *cp)
 {
     int i, by = 0;
     unsigned char ch, *ck = (unsigned char *)k;

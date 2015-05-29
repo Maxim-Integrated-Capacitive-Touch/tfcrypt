@@ -9,32 +9,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Aes">
-      <UniqueIdentifier>{3bd16435-9f32-4287-b5f5-a3beae7eca24}</UniqueIdentifier>
+    <Filter Include="Source Files\aes">
+      <UniqueIdentifier>{497ce598-2eca-4d25-b944-c2e67ee07426}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\B64">
-      <UniqueIdentifier>{5a7b8281-d654-4489-83f7-8b8446640a07}</UniqueIdentifier>
+    <Filter Include="Source Files\b64">
+      <UniqueIdentifier>{4003c5c3-490a-408d-955a-1b94100d89bb}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Crypt.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\aes\aescrypt.c">
-      <Filter>Source Files\Aes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\aes\aeskey2.c">
-      <Filter>Source Files\Aes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\aes\aestab.c">
-      <Filter>Source Files\Aes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\aes\aesxam.c">
-      <Filter>Source Files\Aes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\b64\b64.c">
-      <Filter>Source Files\B64</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="CryptDLL.def">
@@ -42,8 +22,25 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CryptDLL.h">
+    <ClInclude Include="..\..\common.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\aes\aescrypt.c">
+      <Filter>Source Files\aes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\aes\aesxam.c">
+      <Filter>Source Files\aes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\aes\aeskey2.c">
+      <Filter>Source Files\aes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\aes\aestab.c">
+      <Filter>Source Files\aes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\b64\b64.c">
+      <Filter>Source Files\b64</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -34,19 +34,53 @@
 
 #include "CryptDLL.h"
 
-BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved )
+extern "C"
 {
-	switch (ul_reason_for_call)
+	extern short  kfetch(unsigned short *k, unsigned short klen, unsigned char *cp);
+	extern int  encode_buffer(unsigned char *inBuf, unsigned int inBufSize, unsigned char *outBuf, unsigned int outBufSize, unsigned int *outBufUsed);
+	extern int  encrypt_buffer(unsigned char *key, short key_len, unsigned char *in,  unsigned int insize, unsigned char *out, unsigned int outsize, unsigned int *rsize);
+	extern int  decrypt_buffer(unsigned char *key, short key_len, unsigned char *in,  unsigned int insize, unsigned char *out, unsigned int outsize, unsigned int *rsize);
+	extern int  decode_buffer(unsigned char *inBuf, unsigned int inBufSize, unsigned char *outBuf, unsigned int outBufSize, unsigned int *outBufUsed);
+
+	BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved )
 	{
-		case DLL_PROCESS_ATTACH:
-			break;
-		case DLL_THREAD_ATTACH:
-			break;
-		case DLL_THREAD_DETACH:
-			break;
-		case DLL_PROCESS_DETACH:
-			break;
+		switch (ul_reason_for_call)
+		{
+			case DLL_PROCESS_ATTACH:
+				break;
+			case DLL_THREAD_ATTACH:
+				break;
+			case DLL_THREAD_DETACH:
+				break;
+			case DLL_PROCESS_DETACH:
+				break;
+		}
+
+		return TRUE;
 	}
 
-	return TRUE;
+	__declspec(dllexport) short __stdcall  kfetch_a(unsigned short *k, unsigned short klen, unsigned char *cp)
+	{
+		return kfetch(k, klen, cp);
+	}
+
+	__declspec(dllexport) int __stdcall  encode_buffer_a(unsigned char *inBuf, unsigned int inBufSize, unsigned char *outBuf, unsigned int outBufSize, unsigned int *outBufUsed)
+	{
+		return encode_buffer(inBuf, inBufSize, outBuf, outBufSize, outBufUsed);
+	}
+
+	__declspec(dllexport) int __stdcall  encrypt_buffer_a(unsigned char *key, short key_len, unsigned char *in,  unsigned int insize, unsigned char *out, unsigned int outsize, unsigned int *rsize)
+	{
+		return encrypt_buffer(key, key_len, in,  insize, out, outsize, rsize);
+	}
+
+	__declspec(dllexport) int __stdcall  decrypt_buffer_a(unsigned char *key, short key_len, unsigned char *in,  unsigned int insize, unsigned char *out, unsigned int outsize, unsigned int *rsize)
+	{
+		return decrypt_buffer(key, key_len, in,  insize, out, outsize, rsize);
+	}
+
+	__declspec(dllexport) int __stdcall  decode_buffer_a(unsigned char *inBuf, unsigned int inBufSize, unsigned char *outBuf, unsigned int outBufSize, unsigned int *outBufUsed)
+	{
+		return decode_buffer(inBuf, inBufSize, outBuf, outBufSize, outBufUsed);
+	}
 }

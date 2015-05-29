@@ -1,4 +1,8 @@
 LIBRARY   CryptDLL
 EXPORTS
-   Init @1
-  
+	kfetch @1
+	encode_buffer @2
+	encrypt_buffer @3
+	decrypt_buffer @4
+	decode_buffer @5
+

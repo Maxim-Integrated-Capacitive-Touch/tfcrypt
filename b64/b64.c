@@ -327,7 +327,7 @@ static int encode( FILE *infile, FILE *outfile, int linesize )
 }
 #endif
 
-DLLEXPORT int encode_buffer(unsigned char *inBuf, unsigned int inBufSize,
+int DLLEXPORT encode_buffer(unsigned char *inBuf, unsigned int inBufSize,
                   unsigned char *outBuf, unsigned int outBufSize,
                   unsigned int *outBufUsed)
 {
@@ -456,7 +456,7 @@ static int decode( FILE *infile, FILE *outfile )
 }
 #endif
 
-DLLEXPORT int decode_buffer(unsigned char *inBuf, unsigned int inBufSize,
+int DLLEXPORT decode_buffer(unsigned char *inBuf, unsigned int inBufSize,
                   unsigned char *outBuf, unsigned int outBufSize,
                   unsigned int *outBufUsed)
 {
